@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1575915561919.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4187883058",
+    "id" : "4C835588",
+    "lastKnownWriteTime" : 1575916509,
+    "last_content_update" : 1575916510060,
+    "path" : "C:/Users/abhis/Desktop/TranspoAnalysis/TranspoAnalysis/Analysis.Rmd",
+    "project_path" : "Analysis.Rmd",
+    "properties" : {
+        "cursorPosition" : "41,37",
+        "scrollLine" : "32",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
