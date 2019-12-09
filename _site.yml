@@ -7,3 +7,7 @@ navbar:
       href: index.html
     - text: "About"
       href: about.html
+    - text: "Explanation"
+      href: Explanation.html
+    - text: "Analysis"
+      href: Analysis.html
