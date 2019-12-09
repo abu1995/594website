@@ -48,18 +48,30 @@ year_2017 <- read_csv("2017/hhpub.csv")%>%
 
 Below, we can see that there are a lot of trips made by people in the medium incomde group, infact more than people in the higher and lower income groups.
 
-``` {rmain2, echo=FALSE}
-#COLUMN PLOTS OF TRIPS MADE BY THE THREE INCOME GROUPS CONSIDERED
+
+2001
+``` {r, echo=FALSE}
+
 
 
 year_2001 %>%
   filter(HHFAMINC %in% c("03","07","09"))%>%
   ggplot(aes(x = HHFAMINC, y = CNTTDHH, weight = WTHHFIN)) + geom_col(fill = "blue")
+```
 
+
+
+2009
+```{r, echo=FALSE}
 year_2009 %>%
   filter(HHFAMINC %in% c("03","07","09"))%>%
   ggplot(aes(x = HHFAMINC, y = CNTTDHH, weight = WTHHFIN)) + geom_col(fill = "blue")
+```
 
+
+
+2017
+```{r, echo=FALSE}
 year_2017 %>%
   filter(HHFAMINC %in% c("03","07","09"))%>%
   ggplot(aes(x = HHFAMINC, y = CNTTDHH, weight = WTHHFIN)) + geom_col(fill = "blue")
@@ -68,9 +80,11 @@ year_2017 %>%
 
 I have also displayed the car ownership data of the three income groups to show the density of car ownership and we can see from the data that there is more ownership of two cars in the income group 07. 
 
-```{rmain3, echo=FALSE}
 
-#VIOLIN PLOTS OF NO. OF CARS OWNED BY THE THREE INCOME GROUPS
+2001
+```{r, echo=FALSE}
+
+
 
 
 violin_plot2001 = year_2001%>%
@@ -80,7 +94,13 @@ violin_plot2001 = year_2001%>%
   geom_violin(trim = FALSE)+scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
 
 violin_plot2001
+```
 
+
+
+
+2009
+```{r, echo=FALSE}
 
 
 violin_plot2009 = year_2009%>%
@@ -90,7 +110,13 @@ violin_plot2009 = year_2009%>%
   geom_violin(trim = FALSE)+scale_fill_brewer(palette="Dark2")
 
 violin_plot2009
+```
 
+
+
+
+2017
+```{r, echo=FALSE}
 
 
 violin_plot2017 = year_2017%>%

@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1541771869",
+    "hash" : "2100708415",
     "id" : "3B60BE78",
-    "lastKnownWriteTime" : 1575914663,
-    "last_content_update" : 1575914663,
+    "lastKnownWriteTime" : 1575920273,
+    "last_content_update" : 1575920273084,
     "path" : "C:/Users/abhis/Desktop/TranspoAnalysis/TranspoAnalysis/index.Rmd",
     "project_path" : "index.Rmd",
     "properties" : {
+        "cursorPosition" : "4,0",
+        "scrollLine" : "0"
     },
     "read_only" : false,
     "read_only_alternatives" : [

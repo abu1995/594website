@@ -1,13 +1,14 @@
 name: "my-website"
 output_dir: "docs"
 navbar:
-  title: "My Website"
+  title: "PROJECT ON NHTS SURVEY"
   left:
     - text: "Home"
       href: index.html
     - text: "About"
       href: about.html
-    - text: "Explanation"
-      href: Explanation.html
     - text: "Analysis"
       href: Analysis.html
+    - text: "Explanation"
+      href: Explanation.html
+
