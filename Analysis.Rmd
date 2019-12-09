@@ -12,9 +12,13 @@ And the data from these datasets used are :
 
 HHFAMINC -  Household income
 
-03 - $15,000 TO $24,999
-07 - 	$75,000 to $99,999
+03 - $15,000 TO $24,999;
+
+07 - 	$75,000 to $99,999;
+
 09 - 	$125,000 to $149,999
+
+I used these 3 income groups to represent the three types of income groups, lower, medium and high, as they have the most number of people than consequent datasets. 
 
 HHVEHCNT - Count of Household vehicles
 
@@ -27,7 +31,7 @@ CNTTDHH - Count of household trips on travel day
 
 
 
-```{r main1, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 library(tidyverse)
 
@@ -49,8 +53,13 @@ year_2017 <- read_csv("2017/hhpub.csv")%>%
 Below, we can see that there are a lot of trips made by people in the medium incomde group, infact more than people in the higher and lower income groups.
 
 
-2001
-``` {r, echo=FALSE}
+
+
+The below shown data are geom columns, a way of displaying data in R, in which the x-axis represents the family income groups and the y-axis represents the number of trips made by the different income groups.
+
+2001 - In 2001 we can see that there are nearly the same number of trips made by the income groups 07 and 09. The no. of trips made by the income group 03 is significantly lower than the other two.
+
+``` {r, echo=FALSE, message=FALSE, warning=FALSE}
 
 
 
@@ -61,7 +70,8 @@ year_2001 %>%
 
 
 
-2009
+2009 - Compared to the previous year observed, there is approximately the same number of trips made by the 03, 09 income groups, but still the group 07 has more trips.
+
 ```{r, echo=FALSE}
 year_2009 %>%
   filter(HHFAMINC %in% c("03","07","09"))%>%
@@ -69,9 +79,10 @@ year_2009 %>%
 ```
 
 
+2017 - A major increase in the number of trips from the above previous years. Majority of the trips are made by the income group 07 and they consitute to nearly the total trips made by the groups 03 and 09.
 
-2017
-```{r, echo=FALSE}
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 year_2017 %>%
   filter(HHFAMINC %in% c("03","07","09"))%>%
   ggplot(aes(x = HHFAMINC, y = CNTTDHH, weight = WTHHFIN)) + geom_col(fill = "blue")
@@ -81,8 +92,9 @@ year_2017 %>%
 I have also displayed the car ownership data of the three income groups to show the density of car ownership and we can see from the data that there is more ownership of two cars in the income group 07. 
 
 
-2001
-```{r, echo=FALSE}
+2001 - Clearly more number of people in the group 03 have more single cars.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 
 
@@ -99,8 +111,9 @@ violin_plot2001
 
 
 
-2009
-```{r, echo=FALSE}
+2009 - This year, we can observe that people in the groups 07 and 09 possess nearly the same level of ownership of 2 to 3 cars. 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 
 violin_plot2009 = year_2009%>%
@@ -115,8 +128,9 @@ violin_plot2009
 
 
 
-2017
-```{r, echo=FALSE}
+2017 - Now, as per the latest survey data collected, there is almost the same car ownership of 1 car in the group 03 as there is ownership of 2 cars in the group 07.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 
 violin_plot2017 = year_2017%>%
@@ -133,5 +147,5 @@ violin_plot2017
 
 
 
-
+To get the data prepared for analysis, I weighted the HHFAMINC data to the weighted household data in the hhpub file.
 

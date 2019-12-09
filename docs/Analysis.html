@@ -306,126 +306,30 @@ $(document).ready(function () {
 <p>For doing this analysis, I used three data sets from NHTS(National Household Travel Survey), the 2001, 2009 and 2017 datasets</p>
 <p>And the data from these datasets used are :</p>
 <p>HHFAMINC - Household income</p>
-<p>03 - $15,000 TO $24,999 07 - $75,000 to $99,999 09 - $125,000 to $149,999</p>
+<p>03 - $15,000 TO $24,999;</p>
+<p>07 - $75,000 to $99,999;</p>
+<p>09 - $125,000 to $149,999</p>
+<p>I used these 3 income groups to represent the three types of income groups, lower, medium and high, as they have the most number of people than consequent datasets.</p>
 <p>HHVEHCNT - Count of Household vehicles</p>
 <p>RAIL- MSA heavy rail status for household</p>
 <p>WTHHFIN - Data needed to weight Household data</p>
 <p>CNTTDHH - Count of household trips on travel day</p>
-<pre><code>## -- Attaching packages ----------------------------------- tidyverse 1.2.1 --</code></pre>
-<pre><code>## v ggplot2 3.2.1     v purrr   0.3.3
-## v tibble  2.1.3     v dplyr   0.8.3
-## v tidyr   1.0.0     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.4.0</code></pre>
-<pre><code>## -- Conflicts -------------------------------------- tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_double(),
-##   HOUSEID = col_character(),
-##   HBHUR = col_character(),
-##   HTHUR = col_character(),
-##   LIF_CYC = col_character(),
-##   SMPLAREA = col_character(),
-##   SMPLFIRM = col_character(),
-##   SMPLSRCE = col_character(),
-##   HHINCTTL = col_character(),
-##   HHRESP = col_character(),
-##   HHFAMINC = col_character(),
-##   HHR_RACE = col_character(),
-##   INCM_P1 = col_character(),
-##   INCM_P2 = col_character(),
-##   INCM_P3 = col_character(),
-##   INCM_P4 = col_character(),
-##   INCM_P5 = col_character(),
-##   INCM_P6 = col_character(),
-##   HHSTATE = col_character(),
-##   HHSTFIPS = col_character(),
-##   HHC_MSA = col_character()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_character(),
-##   HOUSEID = col_double(),
-##   VARSTRAT = col_double(),
-##   WTHHFIN = col_double(),
-##   DRVRCNT = col_double(),
-##   CDIVMSAR = col_double(),
-##   HHRELATD = col_double(),
-##   HHSIZE = col_double(),
-##   HHVEHCNT = col_double(),
-##   NUMADLT = col_double(),
-##   RESP_CNT = col_double(),
-##   WRKCOUNT = col_double(),
-##   TDAYDATE = col_double(),
-##   CNTTDHH = col_double(),
-##   HTRESDN = col_double(),
-##   HTHTNRNT = col_double(),
-##   HTPPOPDN = col_double(),
-##   HTEEMPDN = col_double(),
-##   HBRESDN = col_double(),
-##   HBHTNRNT = col_double(),
-##   HBPPOPDN = col_double()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_character(),
-##   HOUSEID = col_double(),
-##   HHSIZE = col_double(),
-##   HHVEHCNT = col_double(),
-##   DRVRCNT = col_double(),
-##   CNTTDHH = col_double(),
-##   NUMADLT = col_double(),
-##   YOUNGCHILD = col_double(),
-##   WRKCOUNT = col_double(),
-##   TDAYDATE = col_double(),
-##   CDIVMSAR = col_double(),
-##   RESP_CNT = col_double(),
-##   WTHHFIN = col_double(),
-##   HTPPOPDN = col_double(),
-##   HTRESDN = col_double(),
-##   HTEEMPDN = col_double(),
-##   HBPPOPDN = col_double(),
-##   HBRESDN = col_double()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
 <p>Below, we can see that there are a lot of trips made by people in the medium incomde group, infact more than people in the higher and lower income groups.</p>
-<p>2001 <img src="Analysis_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>2009 <img src="Analysis_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>2017 <img src="Analysis_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>I have also displayed the car ownership data of the three income groups to show the density of car ownership and we can see from the data that there is more ownership of two cars in the income group 07.</p>
-<p>2001</p>
-<pre><code>## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
-## = kernel, : sum(weights) != 1 -- will not get true density
-
-## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
-## = kernel, : sum(weights) != 1 -- will not get true density
-
-## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
-## = kernel, : sum(weights) != 1 -- will not get true density</code></pre>
+<p>The below shown data are geom columns, a way of displaying data in R, in which the x-axis represents the family income groups and the y-axis represents the number of trips made by the different income groups.</p>
+<p>2001 - In 2001 we can see that there are nearly the same number of trips made by the income groups 07 and 09. The no. of trips made by the income group 03 is significantly lower than the other two.</p>
+<p><img src="Analysis_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>2009 - Compared to the previous year observed, there is approximately the same number of trips made by the 03, 09 income groups, but still the group 07 has more trips.</p>
+<p><img src="Analysis_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>2017 - A major increase in the number of trips from the above previous years. Majority of the trips are made by the income group 07 and they consitute to nearly the total trips made by the groups 03 and 09.</p>
 <p><img src="Analysis_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>2009</p>
-<pre><code>## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
-## = kernel, : sum(weights) != 1 -- will not get true density
-
-## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
-## = kernel, : sum(weights) != 1 -- will not get true density
-
-## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
-## = kernel, : sum(weights) != 1 -- will not get true density</code></pre>
+<p>I have also displayed the car ownership data of the three income groups to show the density of car ownership and we can see from the data that there is more ownership of two cars in the income group 07.</p>
+<p>2001 - Clearly more number of people in the group 03 have more single cars.</p>
 <p><img src="Analysis_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>2017</p>
-<pre><code>## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
-## = kernel, : sum(weights) != 1 -- will not get true density
-
-## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
-## = kernel, : sum(weights) != 1 -- will not get true density
-
-## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
-## = kernel, : sum(weights) != 1 -- will not get true density</code></pre>
+<p>2009 - This year, we can observe that people in the groups 07 and 09 possess nearly the same level of ownership of 2 to 3 cars.</p>
 <p><img src="Analysis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>2017 - Now, as per the latest survey data collected, there is almost the same car ownership of 1 car in the group 03 as there is ownership of 2 cars in the group 07.</p>
+<p><img src="Analysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>To get the data prepared for analysis, I weighted the HHFAMINC data to the weighted household data in the hhpub file.</p>
 
 
 

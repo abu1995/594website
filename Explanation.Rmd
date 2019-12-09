@@ -11,7 +11,7 @@ lesser ownership of cars.
 The value '1' represents places with MSA Rail and '2' represents places with no MSA Rail. 
 
 
-```{r e1, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 library(plotly)
 library(tidyverse)
@@ -38,7 +38,7 @@ data2017 <- year_2017%>%
 YEAR 2009
 
 
-```{r e2, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 #####
 
@@ -60,7 +60,7 @@ plot2 %>% ggplotly(tooltip = c("x", "y", "fill")) %>% layout(boxmode = "group")
   
 YEAR 2017  
   
-``` {r e3, echo=FALSE}  
+``` {r, echo=FALSE, message=FALSE, warning=FALSE}  
   
 
 plot <-  ggplot(data2017, aes(x = HHFAMINC)) + 
@@ -90,6 +90,8 @@ plot <-  ggplot(data2017, aes(x = HHFAMINC)) +
 ```
 
 From the above Graphs, we can see that there are more cars purchased by not just one but by all three income groups if there is not much access to Rail or if the cities have no MSA Rail.
+
+Thus, we can learn that there is a high need to develop the existing rail infrastructure to bring the accessibility of train rides to all, if not most of the cities.
 
 
 And thats the conclusion of the Project.
