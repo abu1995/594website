@@ -101,9 +101,10 @@ I have also displayed the car ownership data of the three income groups to show 
 
 violin_plot2001 = year_2001%>%
   filter(HHFAMINC %in% c("03","07","09"))%>%
-  mutate(veh = ifelse(HHVEHCNT > 3, 4, HHVEHCNT))%>%
-  ggplot(aes(x = factor(HHFAMINC), y = veh, weight = WTHHFIN, fill = HHFAMINC))+
-  geom_violin(trim = FALSE)+scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+  mutate(Vehicles = ifelse(HHVEHCNT > 3, 4, HHVEHCNT),
+         Income = as.factor(HHFAMINC))%>%
+  ggplot(aes(x = Income, y = Vehicles, weight = WTHHFIN, fill = HHFAMINC))+
+  geom_violin(trim = FALSE)+scale_fill_brewer(palette="Dark2", name = "Income groups")
 
 violin_plot2001
 ```
@@ -121,6 +122,7 @@ violin_plot2009 = year_2009%>%
   mutate(veh = ifelse(HHVEHCNT > 3, 4, HHVEHCNT))%>%
   ggplot(aes(x = factor(HHFAMINC), y = veh, weight = WTHHFIN, fill = HHFAMINC))+
   geom_violin(trim = FALSE)+scale_fill_brewer(palette="Dark2")
+
 
 violin_plot2009
 ```

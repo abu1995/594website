@@ -22,7 +22,9 @@ library(tidyverse)
 
 data2009 <- year_2009%>%
   dplyr::filter(HHFAMINC %in% c("03","07","09"))%>%
-  group_by(HHFAMINC, RAIL)%>%
+  mutate(Rail = case_when(RAIL == "01" ~ "With Rail",
+                          RAIL == "02" ~ "Without Rail"))%>%
+  group_by(HHFAMINC, Rail)%>%
   summarise(mean_1 = weighted.mean(HHVEHCNT, WTHHFIN), sd(HHVEHCNT))
 
 
@@ -43,7 +45,7 @@ YEAR 2009
 #####
 
 plot2 <-  ggplot(data2009, aes(x = HHFAMINC)) + 
-  geom_col(aes(fill= RAIL, y= mean_1) , colour = "black", size = .1, position = "dodge") +
+  geom_col(aes(fill= Rail, y= mean_1) , colour = "black", size = .1, position = "dodge") +
     ggtitle(NULL, NULL) +
     labs(x = NULL, y = NULL) +
     scale_fill_brewer(palette = "PuBuGn", direction = 1) + 
@@ -53,6 +55,7 @@ plot2 <-  ggplot(data2009, aes(x = HHFAMINC)) +
                                      vjust = 1))
 
 plot2 %>% ggplotly(tooltip = c("x", "y", "fill")) %>% layout(boxmode = "group")
+
   
 
 ```
