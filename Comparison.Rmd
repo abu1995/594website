@@ -1,0 +1,86 @@
+---
+title: "Comparison"
+author: "Abhishek"
+date: "12/13/2019"
+output: html_document
+---
+
+Now that we know that having rail access can affect car ownership to a great extent, now lets see how it compares to different types of cities. A column 'MSASIZE' in the dataset can provide us information about the different types of cities, that is the cities divided into 6 categories based on the density of population.
+
+First lets see how the data displays for the year 2009 as shown below:
+
+````{r, echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(plotly)
+
+#Further comparative analysis
+
+CITYdata2009 <- year_2009%>%
+  dplyr::filter(HHFAMINC %in% c("03","07","09"))%>%
+  mutate(City = factor(MSASIZE, levels = c("01","02","03","04","05","06"), labels = c("less than 250000", "250000-500000","500000-1 million","1-3 million","3 million or more","NO MSA")), Income = factor(HHFAMINC,levels = c("03","07","09"), labels = c("Low","Medium","High")), Rail = case_when(RAIL == "01" ~ "With Rail",
+                          RAIL == "02" ~ "Without Rail"))%>%
+  group_by(HHFAMINC, Rail, City)%>%
+  summarise(mean_1 = weighted.mean(HHVEHCNT, WTHHFIN), sd(HHVEHCNT))
+
+```
+
+
+````{r, echo=TRUE, message=FALSE, warning=FALSE}
+
+#Plotly with different types of cities
+
+
+plot3 <-  ggplot(CITYdata2009, aes(x = HHFAMINC)) + 
+  geom_col(aes(fill= Rail, y= mean_1) , colour = "black", size = .1, position = "dodge") +
+    ggtitle(NULL, NULL) +
+    labs(x ="Income Groups", y = "Car ownership") +
+    scale_fill_brewer(palette = "PuBuGn", direction = 1) + 
+    theme(axis.text.x = element_text(size  = 10, 
+                                     angle = 45,
+                                     hjust = 1,
+                                     vjust = 1))+
+  facet_wrap(~City)
+  
+  
+  plot3 %>% ggplotly(tooltip = c("x", "y", "fill")) %>% layout(boxmode = "group")
+
+```
+
+It seems realistic and it makes sense as the higher income group would definitely want to get cars to avoid the rush in the metros but as the population grows, it is clearly visible that even the higher income groups prefer trains to beat the traffic.
+
+The data from 2017 also shows similar results but also shows that trains have started showing up in cities with population a little below 1 million. 
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+CITYdata2017 <- year_2017%>%
+  dplyr::filter(HHFAMINC %in% c("03","07","09"))%>%
+  mutate(City = factor(MSASIZE, levels = c("01","02","03","04","05","06"), labels = c("less than 250000", "250000-500000","500000-1 million","1-3 million","3 million or more","NO MSA")), Income = factor(HHFAMINC,levels = c("03","07","09"), labels = c("Low","Medium","High")), Rail = case_when(RAIL == "01" ~ "With Rail",
+                          RAIL == "02" ~ "Without Rail"))%>%
+  group_by(HHFAMINC, Rail, City)%>%
+  summarise(mean_1 = weighted.mean(HHVEHCNT, WTHHFIN), sd(HHVEHCNT))
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+plot4 <-  ggplot(CITYdata2017, aes(x = HHFAMINC)) + 
+  geom_col(aes(fill= Rail, y= mean_1) , colour = "black", size = .1, position = "dodge") +
+    ggtitle(NULL, NULL) +
+    labs(x ="Income Groups", y = "Car ownership") +
+    scale_fill_brewer(palette = "PuBuGn", direction = 1) + 
+    theme(axis.text.x = element_text(size  = 10, 
+                                     angle = 45,
+                                     hjust = 1,
+                                     vjust = 1))+
+  facet_wrap(~City)
+  
+  
+  plot4 %>% ggplotly(tooltip = c("x", "y", "fill")) %>% layout(boxmode = "group")
+
+
+
+
+```
+
+
+However, as more ownership of 2 cars exist in the income group '07' which is the medium income group, they are seen to always prefer trains over cars provided they have the access. Thus, I conclude my project

@@ -11,13 +11,13 @@ lesser ownership of cars.
 The value '1' represents places with MSA Rail and '2' represents places with no MSA Rail. 
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
 
 library(plotly)
 library(tidyverse)
 
   
-
+#Preparing data for plotly interactive plots
 
 
 data2009 <- year_2009%>%
@@ -29,9 +29,10 @@ data2009 <- year_2009%>%
 
 
 
+
 data2017 <- year_2017%>%
    dplyr::filter(HHFAMINC %in% c("03","07","09"))%>%
-  mutate(Rail = case_when(RAIL == "01" ~ "With Rail",
+  mutate(Income = factor(HHFAMINC,levels = c("03","07","09"), labels = c("Low","Medium","High")), Rail = case_when(RAIL == "01" ~ "With Rail",
                           RAIL == "02" ~ "Without Rail"))%>%
   group_by(HHFAMINC, Rail)%>%
   summarise(mean_1 = weighted.mean(HHVEHCNT, WTHHFIN), sd(HHVEHCNT))
@@ -42,14 +43,15 @@ data2017 <- year_2017%>%
 YEAR 2009
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
 
-#####
+#Forming and displaying a plot
+
 
 plot2 <-  ggplot(data2009, aes(x = HHFAMINC)) + 
   geom_col(aes(fill= Rail, y= mean_1) , colour = "black", size = .1, position = "dodge") +
     ggtitle(NULL, NULL) +
-    labs(x = NULL, y = NULL) +
+    labs(x = "Income Groups", y = "Car ownership") +
     scale_fill_brewer(palette = "PuBuGn", direction = 1) + 
     theme(axis.text.x = element_text(size  = 10, 
                                      angle = 45,
@@ -71,7 +73,7 @@ YEAR 2017
 plot <-  ggplot(data2017, aes(x = HHFAMINC)) + 
   geom_col(aes(fill= Rail, y= mean_1) , colour = "black", size = .1, position = "dodge") +
     ggtitle(NULL, NULL) +
-    labs(x = NULL, y = NULL) +
+    labs(x = "Income Groups", y = "Car ownership") +
     scale_fill_brewer(palette = "PuBuGn", direction = 1) + 
     theme(axis.text.x = element_text(size  = 10, 
                                      angle = 45,
@@ -82,7 +84,6 @@ plot <-  ggplot(data2017, aes(x = HHFAMINC)) +
   plot %>% ggplotly(tooltip = c("x", "y", "fill")) %>% layout(boxmode = "group")
 
 
-#######
 
 
 
@@ -94,9 +95,10 @@ plot <-  ggplot(data2017, aes(x = HHFAMINC)) +
 
 ```
 
+
+Now lets see how that varies based on the city, so theres a column in our dataset called MSASIZE which is basically the different categories of cities based on its population. 
+
+
 From the above Graphs, we can see that there are more cars purchased by not just one but by all three income groups if there is not much access to Rail or if the cities have no MSA Rail.
 
 Thus, we can learn that there is a high need to develop the existing rail infrastructure to bring the accessibility of train rides to all, if not most of the cities.
-
-
-And thats the conclusion of the Project.

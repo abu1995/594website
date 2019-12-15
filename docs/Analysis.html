@@ -15,7 +15,7 @@
 
 <title>Data Analysis</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -24,6 +24,14 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.10/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.19/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -284,6 +292,9 @@ $(document).ready(function () {
 <li>
   <a href="Explanation.html">Explanation</a>
 </li>
+<li>
+  <a href="Comparison.html">Comparison</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -314,9 +325,30 @@ $(document).ready(function () {
 <p>RAIL- MSA heavy rail status for household</p>
 <p>WTHHFIN - Data needed to weight Household data</p>
 <p>CNTTDHH - Count of household trips on travel day</p>
+<pre class="r"><code>#Extracting the data and assigning them to a dataset
+
+
+library(tidyverse)
+
+year_2001 &lt;- read_csv(&quot;2001/HHPUB.csv&quot;) %&gt;%
+  mutate(HOUSEID = as.factor(HOUSEID), Year = c(rep (2001, 69817))) %&gt;%
+  select(HHFAMINC, CNTTDHH, HHVEHCNT, Year, RAIL, WTHHFIN, MSASIZE)
+
+year_2009 &lt;- read_csv(&quot;2009/HHPUB.csv&quot;)%&gt;%
+  mutate(HOUSEID = as.factor(HOUSEID), Year = c(rep (2009, 150147)))%&gt;%
+  select(HHFAMINC, CNTTDHH, HHVEHCNT, Year, RAIL, WTHHFIN, MSASIZE)
+
+year_2017 &lt;- read_csv(&quot;2017/hhpub.csv&quot;)%&gt;%
+  mutate(HOUSEID = as.factor(HOUSEID), Year = c(rep (2017, 129696)))%&gt;%
+  select(HHFAMINC, CNTTDHH, HHVEHCNT, Year, RAIL, WTHHFIN, MSASIZE)</code></pre>
 <p>Below, we can see that there are a lot of trips made by people in the medium incomde group, infact more than people in the higher and lower income groups.</p>
 <p>The below shown data are geom columns, a way of displaying data in R, in which the x-axis represents the family income groups and the y-axis represents the number of trips made by the different income groups.</p>
 <p>2001 - In 2001 we can see that there are nearly the same number of trips made by the income groups 07 and 09. The no. of trips made by the income group 03 is significantly lower than the other two.</p>
+<pre class="r"><code>#Creation of geom col
+
+year_2001 %&gt;%
+  filter(HHFAMINC %in% c(&quot;03&quot;,&quot;07&quot;,&quot;09&quot;))%&gt;%
+  ggplot(aes(x = HHFAMINC, y = CNTTDHH, weight = WTHHFIN)) + geom_col(fill = &quot;blue&quot;)</code></pre>
 <p><img src="Analysis_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>2009 - Compared to the previous year observed, there is approximately the same number of trips made by the 03, 09 income groups, but still the group 07 has more trips.</p>
 <p><img src="Analysis_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
@@ -324,11 +356,30 @@ $(document).ready(function () {
 <p><img src="Analysis_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>I have also displayed the car ownership data of the three income groups to show the density of car ownership and we can see from the data that there is more ownership of two cars in the income group 07.</p>
 <p>2001 - Clearly more number of people in the group 03 have more single cars.</p>
-<p><img src="Analysis_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>2009 - This year, we can observe that people in the groups 07 and 09 possess nearly the same level of ownership of 2 to 3 cars.</p>
+<pre class="r"><code>library(DT)
+
+datatable(head(year_2001))</code></pre>
+<div id="htmlwidget-41c115e2af1e8b8ecaa8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-41c115e2af1e8b8ecaa8">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["18","04","-7","17","05","16"],[10,5,7,5,2,6],[3,1,2,3,1,2],[2001,2001,2001,2001,2001,2001],[1,2,2,1,2,2],[10455.926335,3360.2960336,2270.9813241,3633.4688387,2066.7170749,2632.1977337],[5,4,6,5,2,6]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>HHFAMINC<\/th>\n      <th>CNTTDHH<\/th>\n      <th>HHVEHCNT<\/th>\n      <th>Year<\/th>\n      <th>RAIL<\/th>\n      <th>WTHHFIN<\/th>\n      <th>MSASIZE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>#Creation of Violin plot
+
+
+violin_plot2001 = year_2001%&gt;%
+  filter(HHFAMINC %in% c(&quot;03&quot;,&quot;07&quot;,&quot;09&quot;))%&gt;%
+  mutate(Vehicles = ifelse(HHVEHCNT &gt; 3, 4, HHVEHCNT),
+         Income = factor(HHFAMINC,levels = c(&quot;03&quot;,&quot;07&quot;,&quot;09&quot;), labels = c(&quot;Low&quot;,&quot;Medium&quot;,&quot;High&quot;)))%&gt;%
+  ggplot(aes(x = Income, y = Vehicles, weight = WTHHFIN, fill = Income))+
+  geom_violin(trim = FALSE)+scale_fill_brewer(palette=&quot;Dark2&quot;, name = &quot;Income groups&quot;)
+
+violin_plot2001</code></pre>
 <p><img src="Analysis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>2009 - This year, we can observe that people in the groups 07 and 09 possess nearly the same level of ownership of 2 to 3 cars. <div id="htmlwidget-7ff89a67f3c57f1f5d36" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7ff89a67f3c57f1f5d36">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["18","08","06","03","16","17"],[13,5,6,4,16,14],[3,1,2,0,3,3],[2009,2009,2009,2009,2009,2009],["02","02","02","01","02","02"],[264.19469357,1278.1298855,383.45059859,2834.4889714,131.5991816,704.59468988],["03","03","03","05","06","02"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>HHFAMINC<\/th>\n      <th>CNTTDHH<\/th>\n      <th>HHVEHCNT<\/th>\n      <th>Year<\/th>\n      <th>RAIL<\/th>\n      <th>WTHHFIN<\/th>\n      <th>MSASIZE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script></p>
+<p><img src="Analysis_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>2017 - Now, as per the latest survey data collected, there is almost the same car ownership of 1 car in the group 03 as there is ownership of 2 cars in the group 07.</p>
-<p><img src="Analysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div id="htmlwidget-208d9006dffb8701cd37" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-208d9006dffb8701cd37">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["07","08","10","03","05","10"],[6,2,9,4,10,11],[5,4,2,2,2,2],[2017,2017,2017,2017,2017,2017],["02","02","02","02","02","02"],[187.314319874054,69.5130321150354,79.4195860434883,279.143588401308,103.240303874967,2329.52533228939],["01","05","03","02","03","03"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>HHFAMINC<\/th>\n      <th>CNTTDHH<\/th>\n      <th>HHVEHCNT<\/th>\n      <th>Year<\/th>\n      <th>RAIL<\/th>\n      <th>WTHHFIN<\/th>\n      <th>MSASIZE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p><img src="Analysis_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>To get the data prepared for analysis, I weighted the HHFAMINC data to the weighted household data in the hhpub file.</p>
 
 

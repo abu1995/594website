@@ -31,21 +31,28 @@ CNTTDHH - Count of household trips on travel day
 
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+
+#Extracting the data and assigning them to a dataset
+
 
 library(tidyverse)
 
 year_2001 <- read_csv("2001/HHPUB.csv") %>%
   mutate(HOUSEID = as.factor(HOUSEID), Year = c(rep (2001, 69817))) %>%
-  select(HHFAMINC, CNTTDHH, HHVEHCNT, Year, RAIL, WTHHFIN)
+  select(HHFAMINC, CNTTDHH, HHVEHCNT, Year, RAIL, WTHHFIN, MSASIZE)
 
 year_2009 <- read_csv("2009/HHPUB.csv")%>%
   mutate(HOUSEID = as.factor(HOUSEID), Year = c(rep (2009, 150147)))%>%
-  select(HHFAMINC, CNTTDHH, HHVEHCNT, Year, RAIL, WTHHFIN)
+  select(HHFAMINC, CNTTDHH, HHVEHCNT, Year, RAIL, WTHHFIN, MSASIZE)
 
 year_2017 <- read_csv("2017/hhpub.csv")%>%
   mutate(HOUSEID = as.factor(HOUSEID), Year = c(rep (2017, 129696)))%>%
-  select(HHFAMINC, CNTTDHH, HHVEHCNT, Year, RAIL, WTHHFIN)
+  select(HHFAMINC, CNTTDHH, HHVEHCNT, Year, RAIL, WTHHFIN, MSASIZE)
+
+
+
+
 
 ```
 
@@ -59,9 +66,9 @@ The below shown data are geom columns, a way of displaying data in R, in which t
 
 2001 - In 2001 we can see that there are nearly the same number of trips made by the income groups 07 and 09. The no. of trips made by the income group 03 is significantly lower than the other two.
 
-``` {r, echo=FALSE, message=FALSE, warning=FALSE}
+``` {r, echo=TRUE, message=FALSE, warning=FALSE}
 
-
+#Creation of geom col
 
 year_2001 %>%
   filter(HHFAMINC %in% c("03","07","09"))%>%
@@ -72,7 +79,7 @@ year_2001 %>%
 
 2009 - Compared to the previous year observed, there is approximately the same number of trips made by the 03, 09 income groups, but still the group 07 has more trips.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE,message=FALSE, warning=FALSE}
 year_2009 %>%
   filter(HHFAMINC %in% c("03","07","09"))%>%
   ggplot(aes(x = HHFAMINC, y = CNTTDHH, weight = WTHHFIN)) + geom_col(fill = "blue")
@@ -94,8 +101,19 @@ I have also displayed the car ownership data of the three income groups to show 
 
 2001 - Clearly more number of people in the group 03 have more single cars.
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
 
+library(DT)
+
+datatable(head(year_2001))
+
+```
+
+
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+
+#Creation of Violin plot
 
 
 violin_plot2001 = year_2001%>%
@@ -112,8 +130,15 @@ violin_plot2001
 
 
 2009 - This year, we can observe that people in the groups 07 and 09 possess nearly the same level of ownership of 2 to 3 cars. 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+datatable(head(year_2009))
+
+```
+
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
 
 
 violin_plot2009 = year_2009%>%
@@ -131,6 +156,12 @@ violin_plot2009
 
 
 2017 - Now, as per the latest survey data collected, there is almost the same car ownership of 1 car in the group 03 as there is ownership of 2 cars in the group 07.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+datatable(head(year_2017))
+
+```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 

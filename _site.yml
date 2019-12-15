@@ -11,4 +11,6 @@ navbar:
       href: Analysis.html
     - text: "Explanation"
       href: Explanation.html
+    - text: "Comparison"
+      href: Comparison.html
 
